@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { EpicController } from './epic.controller';
 import { EpicService } from './epic.service';
-import { Epic } from './entities/epic/epic';
+import { Epic } from './entities/epic';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
