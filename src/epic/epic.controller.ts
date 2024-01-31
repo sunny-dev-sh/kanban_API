@@ -15,7 +15,7 @@ import { UpdateEpicDto } from './dto/update-epic.dto/update-epic.dto';
 export class EpicController {
   constructor(private readonly epicService: EpicService) {}
 
-  @Post()
+  @Post('/create')
   create(@Body() createEpicDto: CreateEpicDto) {
     return this.epicService.create(createEpicDto);
   }
@@ -30,12 +30,12 @@ export class EpicController {
     return this.epicService.findOne(id);
   }
 
-  @Delete(':id')
+  @Delete('/delete/:id')
   remove(@Param('id') id: number) {
     return this.epicService.remove(id);
   }
 
-  @Patch(':id')
+  @Patch('/update/:id')
   update(@Param('id') id: number, @Body() updateEpicDto: UpdateEpicDto) {
     return this.epicService.update(id, updateEpicDto);
   }
