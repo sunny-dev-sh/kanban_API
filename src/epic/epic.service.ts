@@ -84,6 +84,19 @@ export class EpicService {
     if (!epic) {
       throw new NotFoundException(`Epic #${id} not found`);
     }
+
+    // Set the linked stories based on provided Story IDs
+    if (updateEpicDto.storyIds) {
+      const stories = await this.storyRepository.findByIds(updateEpicDto.storyIds);
+      epic.stories = stories;
+    }
+
+    // Set the linked tasks based on provided Task IDs
+    if (updateEpicDto.taskIds) {
+      const tasks = await this.taskRepository.findByIds(updateEpicDto.taskIds);
+      epic.tasks = tasks;
+    }
+
     return this.epicRepository.save(epic);
   }
 }
