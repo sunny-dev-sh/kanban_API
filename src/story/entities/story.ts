@@ -1,5 +1,12 @@
 import { Epic } from 'src/epic/entities/epic';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Task } from 'src/task/entities/task';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 
 @Entity()
 export class Story {
@@ -20,4 +27,7 @@ export class Story {
 
   @ManyToOne(() => Epic, (epic) => epic.stories)
   epic: Epic;
+
+  @OneToMany(() => Task, (task) => task.stories)
+  tasks: Task[];
 }
