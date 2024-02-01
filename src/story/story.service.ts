@@ -6,6 +6,7 @@ import { CreateStoryDto } from './dto/create-story.dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto/update-story.dto';
 import { Epic } from 'src/epic/entities/epic';
 import { Task } from 'src/task/entities/task';
+import { ConvertEntityDto } from 'src/common/dto/convert-entity/convert-entity';
 
 @Injectable()
 export class StoryService {
@@ -26,7 +27,7 @@ export class StoryService {
     story.priority = createStoryDto.priority;
 
     //Link existing tasks
-    if(createStoryDto.taskIds && createStoryDto.taskIds.length > 0){
+    if (createStoryDto.taskIds && createStoryDto.taskIds.length > 0) {
       const tasks = await this.taskRepository.findByIds(createStoryDto.taskIds);
       if (!tasks || tasks.length !== createStoryDto.taskIds.length) {
         throw new NotFoundException('One or more tasks not found');
@@ -40,9 +41,9 @@ export class StoryService {
   async findAll(): Promise<Story[]> {
     return this.storyRepository.find({
       relations: {
-        epic:true,
+        epic: true,
         tasks: true,
-      }
+      },
     });
   }
 
@@ -50,9 +51,9 @@ export class StoryService {
     const story = await this.storyRepository.findOne({
       where: { id: id },
       relations: {
-        epic:true,
-        tasks:true,
-      }
+        epic: true,
+        tasks: true,
+      },
     });
     if (!story) {
       throw new NotFoundException(`Story #${id} not found`);
@@ -78,6 +79,21 @@ export class StoryService {
     if (UpdateStoryDto.taskIds) {
       const tasks = await this.taskRepository.findByIds(UpdateStoryDto.taskIds);
       story.tasks = tasks;
+    }
+
+    return this.storyRepository.save(story);
+  }
+
+  async convert(id: number, convertDto: ConvertEntityDto) {
+    const story = await this.storyRepository.findOne({ where: { id } });
+
+    if (!story) {
+      throw new NotFoundException(`Story #${id} not found`);
+    }
+
+    if (convertDto.targetType === 'epic') {
+      story.type = 'epic';
+      story.epic = null; // clear linked epic
     }
 
     return this.storyRepository.save(story);

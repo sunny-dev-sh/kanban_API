@@ -10,6 +10,7 @@ import {
 import { StoryService } from './story.service';
 import { CreateStoryDto } from './dto/create-story.dto/create-story.dto';
 import { UpdateStoryDto } from './dto/update-story.dto/update-story.dto';
+import { ConvertEntityDto } from 'src/common/dto/convert-entity/convert-entity';
 
 @Controller('story')
 export class StoryController {
@@ -38,5 +39,10 @@ export class StoryController {
   @Patch('/update/:id')
   update(@Param('id') id: number, @Body() updateStoryDto: UpdateStoryDto) {
     return this.storyService.update(id, updateStoryDto);
+  }
+
+  @Patch('/convert-to-epic/:id')
+  convert(@Param('id') id: number, @Body() convertDto: ConvertEntityDto) {
+    return this.storyService.convert(id, convertDto);
   }
 }

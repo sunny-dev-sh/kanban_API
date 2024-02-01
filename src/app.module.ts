@@ -5,6 +5,7 @@ import { EpicModule } from './epic/epic.module';
 import { StoryModule } from './story/story.module';
 import { TaskModule } from './task/task.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true, //disable it in production
     }),
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],

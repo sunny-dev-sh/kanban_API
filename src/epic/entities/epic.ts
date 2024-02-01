@@ -18,6 +18,9 @@ export class Epic {
 
   @Column()
   priority: string;
+
+  @Column({default: 'epic'})
+  type: string;
   
   @OneToMany(() => Story, (story) => story.epic)
   stories: Story[];
