@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Story } from 'src/story/entities/story';
+import { Task } from 'src/task/entities/task';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
 export class Epic {
@@ -16,4 +18,10 @@ export class Epic {
 
   @Column()
   priority: string;
+  
+  @OneToMany(() => Story, (story) => story.epic)
+  stories: Story[];
+
+  @OneToMany(() => Task, (task) => task.epic, { cascade: true })
+  tasks: Task[];
 }
