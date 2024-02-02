@@ -5,11 +5,10 @@ import { Epic } from './entities/epic';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Story } from 'src/story/entities/story';
 import { Task } from 'src/task/entities/task';
-import { ConvertEntityDto } from 'src/common/dto/convert-entity/convert-entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Epic, Story, Task])],
   controllers: [EpicController],
-  providers: [EpicService, ConvertEntityDto],
+  providers: [EpicService],
 })
 export class EpicModule {}

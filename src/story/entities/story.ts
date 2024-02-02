@@ -25,9 +25,6 @@ export class Story {
   @Column()
   priority: string;
 
-  @Column({default: 'story'})
-  type: string;
-
   @ManyToOne(() => Epic, (epic) => epic.stories)
   epic: Epic;
 

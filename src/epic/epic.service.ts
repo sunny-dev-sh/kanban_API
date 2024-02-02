@@ -6,7 +6,6 @@ import { CreateEpicDto } from './dto/create-epic.dto/create-epic.dto';
 import { UpdateEpicDto } from './dto/update-epic.dto/update-epic.dto';
 import { Story } from 'src/story/entities/story';
 import { Task } from 'src/task/entities/task';
-import { ConvertEntityDto } from 'src/common/dto/convert-entity/convert-entity';
 
 @Injectable()
 export class EpicService {
@@ -98,22 +97,6 @@ export class EpicService {
     if (updateEpicDto.taskIds) {
       const tasks = await this.taskRepository.findByIds(updateEpicDto.taskIds);
       epic.tasks = tasks;
-    }
-
-    return this.epicRepository.save(epic);
-  }
-
-  async convert(id: number, convertDto: ConvertEntityDto) {
-    const epic = await this.epicRepository.findOne({ where: { id } });
-
-    if (!epic) {
-      throw new NotFoundException(`Epic #${id} not found`);
-    }
-
-    if (convertDto.targetType === 'story') {
-      epic.type = 'story';
-      epic.stories = []; // clear linked stories
-      epic.tasks = []; // clear linked tasks
     }
 
     return this.epicRepository.save(epic);
