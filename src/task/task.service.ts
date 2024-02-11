@@ -20,6 +20,7 @@ export class TaskService {
   async findAll(): Promise<Task[]> {
     return this.taskRepository.find({
       relations: {
+        user: true,
         epic: true,
         stories: true,
       }
@@ -30,6 +31,7 @@ export class TaskService {
     const task = await this.taskRepository.findOne({
       where: { id: id },
       relations: {
+        user: true,
         epic: true,
         stories: true,
       }

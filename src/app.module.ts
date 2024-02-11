@@ -5,12 +5,15 @@ import { EpicModule } from './epic/epic.module';
 import { StoryModule } from './story/story.module';
 import { TaskModule } from './task/task.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     EpicModule,
     StoryModule,
     TaskModule,
+    UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -19,8 +22,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       password: 'sh@110123',
       database: 'kanban_db',
       autoLoadEntities: true,
-      synchronize: true, //disable it in production
+      synchronize: false, //disable it in production
     }),
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

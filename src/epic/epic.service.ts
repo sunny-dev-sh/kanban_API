@@ -51,6 +51,7 @@ export class EpicService {
   async findAll(): Promise<Epic[]> {
     return this.epicRepository.find({
       relations: {
+        user: true,
         stories: true,
         tasks: true,
       },
@@ -61,6 +62,7 @@ export class EpicService {
     const epic = await this.epicRepository.findOne({
       where: { id: id },
       relations: {
+        user: true,
         stories: true,
         tasks: true,
       },

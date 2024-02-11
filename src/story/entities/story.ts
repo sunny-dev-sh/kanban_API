@@ -1,5 +1,6 @@
 import { Epic } from 'src/epic/entities/epic';
 import { Task } from 'src/task/entities/task';
+import { User } from 'src/users/entities/user';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -30,4 +31,7 @@ export class Story {
 
   @OneToMany(() => Task, (task) => task.stories)
   tasks: Task[];
+
+  @ManyToOne(() => User, (user) => user.stories)
+  user: User;
 }

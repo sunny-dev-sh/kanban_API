@@ -5,9 +5,10 @@ import { Story } from './entities/story';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Epic } from 'src/epic/entities/epic';
 import { Task } from 'src/task/entities/task';
+import { User } from 'src/users/entities/user';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Story, Epic, Task])],
+  imports: [TypeOrmModule.forFeature([Story, Epic, Task, User])],
   controllers: [StoryController],
   providers: [StoryService]
 })

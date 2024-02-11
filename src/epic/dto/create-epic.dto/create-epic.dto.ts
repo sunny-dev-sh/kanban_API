@@ -26,6 +26,14 @@ export class CreateEpicDto {
   readonly priority: string;
 
   @ApiProperty({
+    description: 'Users that are linked with this Epic',
+    example: '[id: 1, id: 2, ...]',
+  })
+  @IsOptional()
+  @IsArray()
+  readonly userIds?: number[];
+
+  @ApiProperty({
     description: 'Stories that are linked with this Epic',
     example: '[id: 1, id: 2, ...]',
   })

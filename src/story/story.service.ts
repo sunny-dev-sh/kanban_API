@@ -40,6 +40,7 @@ export class StoryService {
   async findAll(): Promise<Story[]> {
     return this.storyRepository.find({
       relations: {
+        user: true,
         epic:true,
         tasks: true,
       }
@@ -50,6 +51,7 @@ export class StoryService {
     const story = await this.storyRepository.findOne({
       where: { id: id },
       relations: {
+        user: true,
         epic:true,
         tasks:true,
       }
