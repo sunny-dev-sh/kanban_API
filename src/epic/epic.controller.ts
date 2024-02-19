@@ -6,11 +6,12 @@ import {
   Param,
   Delete,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { EpicService } from './epic.service';
 import { CreateEpicDto } from './dto/create-epic.dto/create-epic.dto';
 import { UpdateEpicDto } from './dto/update-epic.dto/update-epic.dto';
-import { 
+import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -18,12 +19,14 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/users/jwt-auth.guard';
 
 @Controller('epic')
 @ApiTags('epic')
 export class EpicController {
   constructor(private readonly epicService: EpicService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('/create')
   @ApiOperation({ summary: 'Create a new Epic' })
   @ApiCreatedResponse({ description: 'Epic created successfully' })
@@ -47,6 +50,7 @@ export class EpicController {
     return this.epicService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/delete/:id')
   @ApiOperation({ summary: 'Delete an Epic by ID' })
   @ApiOkResponse({ description: 'Epic deleted' })
@@ -55,9 +59,10 @@ export class EpicController {
     return this.epicService.remove(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('/update/:id')
   @ApiOperation({ summary: 'Update an Epic by ID' })
-  @ApiOkResponse({ description: 'Epic updated'})
+  @ApiOkResponse({ description: 'Epic updated' })
   @ApiNotFoundResponse({ description: 'Epic not found' })
   update(@Param('id') id: number, @Body() updateEpicDto: UpdateEpicDto) {
     return this.epicService.update(id, updateEpicDto);

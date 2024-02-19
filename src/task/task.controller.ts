@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-tast.dto/create-tast.dto';
@@ -18,12 +19,14 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/users/jwt-auth.guard';
 
 @Controller('task')
 @ApiTags('task')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('/create')
   @ApiOperation({ summary: 'Create a new Task' })
   @ApiCreatedResponse({ description: 'Task created successfully' })
@@ -47,6 +50,7 @@ export class TaskController {
     return this.taskService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/delete/:id')
   @ApiOperation({ summary: 'Delete a Task by ID' })
   @ApiOkResponse({ description: 'Task deleted' })
@@ -55,6 +59,7 @@ export class TaskController {
     return this.taskService.remove(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('/update/:id')
   @ApiOperation({ summary: 'Update a Task by ID' })
   @ApiOkResponse({ description: 'Task updated' })

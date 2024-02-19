@@ -5,7 +5,6 @@ import { EpicModule } from './epic/epic.module';
 import { StoryModule } from './story/story.module';
 import { TaskModule } from './task/task.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -24,7 +23,6 @@ import { UsersModule } from './users/users.module';
       autoLoadEntities: true,
       synchronize: false, //disable it in production
     }),
-    AuthModule,
     UsersModule,
   ],
   controllers: [AppController],

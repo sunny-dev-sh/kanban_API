@@ -6,9 +6,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Epic } from 'src/epic/entities/epic';
 import { Story } from 'src/story/entities/story';
 import { User } from 'src/users/entities/user';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Task, Epic, Story, User])],
+  imports: [
+    TypeOrmModule.forFeature([Task, Epic, Story, User]),
+    JwtModule.register({
+      secret: 'saleshandy',
+      signOptions: { expiresIn: '1h' },
+    }),
+  ],
   controllers: [TaskController],
   providers: [TaskService],
 })

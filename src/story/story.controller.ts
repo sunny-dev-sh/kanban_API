@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { StoryService } from './story.service';
 import { CreateStoryDto } from './dto/create-story.dto/create-story.dto';
@@ -18,12 +19,14 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/users/jwt-auth.guard';
 
 @Controller('story')
 @ApiTags('story')
 export class StoryController {
   constructor(private readonly storyService: StoryService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('/create')
   @ApiOperation({ summary: 'Create a new Story' })
   @ApiCreatedResponse({ description: 'Story created successfully' })
@@ -47,6 +50,7 @@ export class StoryController {
     return this.storyService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/delete/:id')
   @ApiOperation({ summary: 'Delete a Story by ID' })
   @ApiOkResponse({ description: 'Story deleted' })
@@ -55,6 +59,7 @@ export class StoryController {
     return this.storyService.remove(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('/update/:id')
   @ApiOperation({ summary: 'Update a Story by ID' })
   @ApiOkResponse({ description: 'Story updated' })
